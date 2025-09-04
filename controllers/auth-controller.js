@@ -10,7 +10,7 @@ const upload = multer({ storage });
 // Controller function for registering feedback
 const registerFeedBack = async (req, res) => {
   try {
-    const { name, email, message, type, status, comments } = req.body;
+    const { name, email, message, type, status, comments,criticality } = req.body;
     const timestamp = new Date();
 
     // Multer + Cloudinary stores uploaded file info in req.file
@@ -25,6 +25,7 @@ const registerFeedBack = async (req, res) => {
       status,
       comments,
       image: imageUrl,
+      criticality
     });
 
     await newFeedBack.save();

@@ -20,8 +20,13 @@ const feedbackSchema = new mongoose.Schema({
   image: { type: String },
   type: {
     type: String,
-    enum: ['Bug', 'Feature Request', 'General','Improvement Suggestion'],
+    enum: ['bug', 'feature', 'general', 'improvement','other'],
     default: 'General'
+  },
+  criticality: {
+    type: String,
+    enum: ['low', 'average', 'high', 'blocking'],
+    default: 'low'
   },
   timestamp: {
     type: Date,
@@ -47,7 +52,7 @@ const feedbackSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
       }
-    }
+    },
   ]
 });
 

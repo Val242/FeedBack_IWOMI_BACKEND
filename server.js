@@ -10,6 +10,7 @@ const collaboratorRoutes = require('./routes/collaborator')
 const feedBackRoute = require('./routes/feedbackRoute');
 const assignmentRoute = require('./routes/assignmentRoutes');
 const getAllCollaboratorsRoute = require('./routes/collaboratorRoute')
+
 const connectToDB = require("./config/db");
 
 // Middleware
@@ -32,6 +33,7 @@ app.use('/api/collaborator', collaboratorRoutes);
 app.use('/api/admin/feedback', feedBackRoute);
 app.use('/api/admin/assign', assignmentRoute);
 app.use('/api/admin/collaboratorRoute', getAllCollaboratorsRoute)
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
