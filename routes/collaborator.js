@@ -7,14 +7,9 @@ const router = express.Router();
 router.get(
   '/collaboratordashboard',
   authMiddleware,
-  roleMiddleware('collaborator'), // ✅ must be a function
+  roleMiddleware('collaborator'), // works now
   async (req, res) => {
-    try {
-      res.status(200).json({ message: 'Welcome, Collaborator' });
-    } catch (error) {
-      console.error('Error in /dashboard route:', error);
-      res.status(500).json({ error: 'Server Error. Please try again later.' });
-    }
+    res.status(200).json({ message: 'Welcome, Admin' });
   }
 );
 

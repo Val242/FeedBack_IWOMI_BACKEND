@@ -5,7 +5,7 @@ const Developer = require('../models/developer');
 const getAllFeedbacks = async (req, res) => {
   try {
     const feedbacks = await FeedBack.find()
-      .populate('assignedTo', 'name email') // optional: if you want developer details
+      .populate('assignedTo', 'name email role') // optional: if you want developer details
             // optional: if you linked feedback to a company
     
     res.status(200).json(feedbacks);

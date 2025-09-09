@@ -6,10 +6,11 @@ const PORT = 3000;
 
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
-const collaboratorRoutes = require('./routes/collaborator')
+//const collaboratorRoutes = require('./routes/collaborator')
 const feedBackRoute = require('./routes/feedbackRoute');
 const assignmentRoute = require('./routes/assignmentRoutes');
 const getAllCollaboratorsRoute = require('./routes/collaboratorRoute')
+const assignedFeedbackRoute = require('./routes/collaboratorAssignedFeedBack');
 
 const connectToDB = require("./config/db");
 
@@ -29,11 +30,11 @@ app.use(cors({
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/collaborator', collaboratorRoutes);
+//app.use('/api/collaborator', collaboratorRoutes);
 app.use('/api/admin/feedback', feedBackRoute);
 app.use('/api/admin/assign', assignmentRoute);
 app.use('/api/admin/collaboratorRoute', getAllCollaboratorsRoute)
-
+app.use('/api/collaborator/feedbacks', assignedFeedbackRoute);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
