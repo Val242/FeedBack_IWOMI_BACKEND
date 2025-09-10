@@ -42,6 +42,12 @@ const feedbackSchema = new mongoose.Schema({
     enum: ['New', 'Assigned', 'In Progress', 'Resolved', 'Closed'],
     default: 'New'
   },
+  progress: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0
+  },
   comments: [
     {
       author: {

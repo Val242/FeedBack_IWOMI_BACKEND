@@ -152,7 +152,7 @@ const developerLogin = async (req, res) => {
         role: developer.role,
       },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: '1h' }
+      { expiresIn: '10s' }
     );
 
     res.status(200).json({
@@ -160,6 +160,7 @@ const developerLogin = async (req, res) => {
       token,
       developerId: developer._id,
       role: developer.role,
+      name
     });
   } catch (error) {
     console.log('Login Error:', error);

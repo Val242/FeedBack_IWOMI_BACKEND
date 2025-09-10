@@ -12,7 +12,7 @@ const getAssignedFeedbacks = async (req, res) => {
     // Generate notifications dynamically
     const notifications = feedbacks.map(f => ({
       id: f._id,
-      message: `New feedback assigned: ${f.title}`,
+      message: `New feedback assigned: ${f.message}`,
       read: false,
       date: f.timestamp || f.date
     }));
