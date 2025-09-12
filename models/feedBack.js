@@ -17,7 +17,10 @@ const feedbackSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  image: { type: String },
+  image: {
+     type: String,
+     required: true
+    },
   type: {
     type: String,
     enum: ['bug', 'feature', 'general', 'improvement','other'],
@@ -40,6 +43,7 @@ const feedbackSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['New', 'Assigned', 'In Progress', 'Resolved', 'Closed'],
+   // enum: ['new', 'assigned', 'inprogress', 'resolved', 'closed'],
     default: 'New'
   },
   progress: {

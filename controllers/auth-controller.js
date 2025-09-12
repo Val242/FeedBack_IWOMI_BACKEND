@@ -10,11 +10,17 @@ const upload = multer({ storage });
 // Controller function for registering feedback
 const registerFeedBack = async (req, res) => {
   try {
+    console.log(req.file);
+    console.log(req.name);
     const { name, email, message, type, status, comments,criticality } = req.body;
     const timestamp = new Date();
 
     // Multer + Cloudinary stores uploaded file info in req.file
     const imageUrl = req.file ? req.file.path : null;
+
+        if (!imageUrl) {
+      return res.status(400).json({ message: "Image is required" });
+    }    
 
     const newFeedBack = new FeedBack({
       name,

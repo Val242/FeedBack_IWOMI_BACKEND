@@ -5,7 +5,7 @@ const { adminLogin, registerAdmin, registerFeedBack,registerDeveloper,developerL
 const router = express.Router();
 
 router.post('/registeradmin', registerAdmin);
-router.post('/registerFeedback', upload.array('image', 5), registerFeedBack);
+router.post('/registerFeedback', upload.single('image'), registerFeedBack);
 router.post('/adminlogin', adminLogin);
 router.post('/registerdeveloper', registerDeveloper);
 router.post('/collaboratorlogin', developerLogin);
