@@ -2,35 +2,48 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = process.env.PORT || 3000; // Use Render's PORT env if available
+const PORT = process.env.PORT || 3000;
+
+// Database connection
+const connectToDB = require("./config/db");
 
 // Routes
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
-// const collaboratorRoutes = require('./routes/collaborator')
 const feedBackRoute = require('./routes/feedbackRoute');
 const assignmentRoute = require('./routes/assignmentRoutes');
 const getAllCollaboratorsRoute = require('./routes/collaboratorRoute');
 const assignedFeedbackRoute = require('./routes/collaboratorAssignedFeedBack');
 const updatedFeedback = require('./routes/UpdatingRoute');
 
-const connectToDB = require("./config/db");
-
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Allow both local & deployed frontend
+// ✅ CORS setup (robust)
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://feed-back-iwomi-frontend.vercel.app'
+];
+
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://feedbackiwomi-frontend.onrender.com'  // <-- replace with your actual frontend Render URL
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true); // allow non-browser requests like Postman
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
-// ✅ Health check route (prevents 404 on root)
+// ✅ Handle preflight OPTIONS requests globally
+app.options('*', cors());
+
+// Health check
 app.get("/", (req, res) => {
   res.send("✅ Feedback backend is running on Render!");
 });
@@ -38,7 +51,6 @@ app.get("/", (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
-// app.use('/api/collaborator', collaboratorRoutes);
 app.use('/api/admin/feedback', feedBackRoute);
 app.use('/api/admin/assign', assignmentRoute);
 app.use('/api/admin/collaboratorRoute', getAllCollaboratorsRoute);
@@ -55,8 +67,9 @@ app.use((err, req, res, next) => {
   }
 });
 
+// Connect to DB and start server
 connectToDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
   });
 });
